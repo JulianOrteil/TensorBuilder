@@ -76,10 +76,16 @@ def parse_args() -> argparse.Namespace:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
 
-    parser.add_argument("-v", "--version", help="print the version of the app and then exit.")
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="store_true",
+        help="print the version of the app and then exit."
+    )
     parser.add_argument(
         "-V",
         "--verbose",
+        action="store_true",
         help=(
             "depending on the OS, open a Powershell window or "
             "terminal and display the output of the app."
