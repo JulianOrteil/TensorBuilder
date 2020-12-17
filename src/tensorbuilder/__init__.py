@@ -49,16 +49,51 @@ import sys
 from multiprocessing import freeze_support
 
 from loguru import logger
-from PyQt5.QtCore import QObject
+from PyQt5.QtCore import QObject, QThread
 from PyQt5.QtWidgets import QApplication
 
 
 class Application(QObject):
-    pass
+    """The core class of the application.
+
+    This class's primary duty is to start the application and then
+    "step-back" and allow the two systems to communication through
+    signals and slots.
+    """
+
+    _args: argparse.Namespace
+
+    _loader: Loader
+    _loader_thread: QThread
+
+    def __init__(self, args: argparse.Namespace) -> None:
+        logger.debug(f"Initializing {__name__}.{__class__.__name__}")
+        super().__init__()
+
+        self._args = args
+
+        # Create the loader and start the loading thread
+        self._loader = Loader()
+        self._loader_thread = QThread(self)
+        self._loader.moveToThread(self._loader_thread)
+        self._loader_thread.start()
+
+        logger.success(f"Successfully initialized {__name__}.{__class__.__name__}")
 
 
 class Loader(QObject):
-    pass
+    """The loading class of the application.
+
+    This class's primary duty is to load the backend of the application
+    in a separate :obj:`QThread` (hence the need for the class).
+    """
+
+    def __init__(self) -> None:
+        logger.debug(f"Initializing {__name__}.{__class__.__name__}")
+        super().__init__()
+
+        logger.success(f"Successfully initialized {__name__}.{__class__.__name__}")
+
 
 
 def parse_args() -> argparse.Namespace:
