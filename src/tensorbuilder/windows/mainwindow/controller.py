@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""The main interactable window of the application.
+"""Handles the user interactions for the main window.
 
 """
 
@@ -23,7 +23,13 @@ from __future__ import division
 from __future__ import print_function
 
 
-__all__ = ["MainWindow"]
+__all__ = ["MainWindowController"]
 
 
-from .controller import MainWindow
+from loguru import logger
+
+from .ui import UiMainWindow
+
+
+class MainWindowController(UiMainWindow):
+    pass

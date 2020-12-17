@@ -19,6 +19,9 @@ This module builds and configures the widgets of the main window.
 'UiMainWindow' is the primary builder class for the main window. It is
 meant to be inherited before the window type (i.e. 'QMainWindow') and
 the 'setup_ui' function should be called to build the widgets.
+
+Importing everything from this module will only import the variables as
+defined by the '__all__' attribute.
 """
 
 
@@ -28,9 +31,20 @@ from __future__ import division
 from __future__ import print_function
 
 
-from PyQt5.QtCore import QObject, QSize
-from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import QGridLayout, QMainWindow, QSizePolicy, QWidget
+from PyQt5.QtCore import QCoreApplication, QMetaObject, QObject, QSize, Qt
+from PyQt5.QtGui import QFont, QIcon, QPixmap
+from PyQt5.QtWidgets import (
+    QFrame,
+    QGridLayout,
+    QHBoxLayout,
+    QLabel,
+    QMainWindow,
+    QPushButton,
+    QSizePolicy,
+    QSpacerItem,
+    QVBoxLayout,
+    QWidget
+)
 
 
 class UiMainWindow(QObject):
@@ -49,6 +63,21 @@ class UiMainWindow(QObject):
 
     _central_widget: QWidget
     _central_layout: QGridLayout
+
+    _main_container: QFrame
+
+    _navbar: QFrame
+    _navbar_layout: QVBoxLayout
+    _home_button: QPushButton
+    _builder_button: QPushButton
+    _configuration_button: QPushButton
+    _help_button: QPushButton
+    _copyright_label: QLabel
+
+    _menubar: QFrame
+    _menubar_layout: QHBoxLayout
+    _app_logo: QLabel
+    _menubar_main_container: QFrame
 
     def setup_ui(self, TensorBuilder: QMainWindow):
         """Creates and configures the widgets of the main window."""
@@ -135,5 +164,269 @@ class UiMainWindow(QObject):
         self._central_layout.setObjectName("central_layout")
         self._central_layout.setSpacing(0)
 
-    def _setup_main_container() -> None:
-        pass
+        # Add widgets to the central layout
+        self._central_layout.addWidget(self._menubar, 0, 0, 1, 2)
+        self._central_layout.addWidget(self._main_container, 1, 1, 1, 1)
+        self._central_layout.addWidget(self._navbar, 1, 0, 1, 1)
+
+        TensorBuilder.setCentralWidget(self._central_widget)
+
+        self._retranslate_ui(TensorBuilder)
+        QMetaObject.connectSlotsByName(TensorBuilder)
+
+    def _setup_main_container(self) -> None:
+        # Create the main container
+        self._main_container = QFrame(self._central_widget)
+        self._main_container.setFrameShadow(QFrame.Raised)
+        self._main_container.setFrameShape(QFrame.StyledPanel)
+        self._main_container.setObjectName("main_container")
+
+        size_policy = QSizePolicy(
+            QSizePolicy.Expanding,
+            QSizePolicy.Expanding
+        )
+        size_policy.setHorizontalStretch(6)
+        size_policy.setVerticalStretch(25)
+        size_policy.setHeightForWidth(self._main_container.sizePolicy().hasHeightForWidth())
+
+        self._main_container.setSizePolicy(size_policy)
+
+    def _setup_navbar(self) -> None:
+        # Create the navbar
+        self._navbar = QFrame(self._main_container)
+        self._navbar.setFrameShadow(QFrame.Raised)
+        self._navbar.setFrameShape(QFrame.StyledPanel)
+        self._navbar.setMinimumSize(QSize(275, 0))
+        self._navbar.setObjectName("navbar")
+
+        size_policy = QSizePolicy(
+            QSizePolicy.Expanding,
+            QSizePolicy.Expanding
+        )
+        size_policy.setHorizontalStretch(1)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(self._navbar.sizePolicy().hasHeightForWidth())
+
+        self._navbar.setSizePolicy(size_policy)
+
+        self._navbar_layout = QVBoxLayout(self._navbar)
+        self._navbar_layout.setContentsMargins(0, 25, 0, 15)
+        self._navbar_layout.setObjectName("navbar_layout")
+        self._navbar_layout.setSpacing(15)
+
+        # Create the home button
+        self._home_button = QPushButton(self._navbar)
+
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(12)
+
+        self._home_button.setFont(font)
+
+        home_icon = QIcon()
+        home_icon.addPixmap(
+            QPixmap(":/images/images/home_icon.png"),
+            QIcon.Normal,
+            QIcon.Off
+        )
+
+        self._home_button.setIcon(home_icon)
+        self._home_button.setIconSize(QSize(20, 20))
+        self._home_button.setObjectName("home_button")
+
+        size_policy = QSizePolicy(
+            QSizePolicy.Expanding,
+            QSizePolicy.Fixed
+        )
+        size_policy.setHorizontalStretch(0)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(self._home_button.sizePolicy().hasHeightForWidth())
+
+        self._home_button.setSizePolicy(size_policy)
+
+        # Create the builder button
+        self._builder_button = QPushButton(self._navbar)
+
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(12)
+
+        self._builder_button.setFont(font)
+
+        builder_icon = QIcon()
+        builder_icon.addPixmap(
+            QPixmap(":/images/images/builder_icon.png"),
+            QIcon.Normal,
+            QIcon.Off
+        )
+
+        self._builder_button.setIcon(builder_icon)
+        self._builder_button.setIconSize(QSize(20, 20))
+        self._builder_button.setObjectName("builder_button")
+
+        size_policy = QSizePolicy(
+            QSizePolicy.Expanding,
+            QSizePolicy.Fixed
+        )
+        size_policy.setHorizontalStretch(0)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(self._builder_button.sizePolicy().hasHeightForWidth())
+
+        self._builder_button.setSizePolicy(size_policy)
+
+        # Create the configuration button
+        self._configuration_button = QPushButton(self._navbar)
+
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(12)
+
+        self._configuration_button.setFont(font)
+
+        configuration_icon = QIcon()
+        configuration_icon.addPixmap(
+            QPixmap(":/images/images/configuration_icon.png"),
+            QIcon.Normal,
+            QIcon.Off
+        )
+
+        self._configuration_button.setIcon(configuration_icon)
+        self._configuration_button.setIconSize(QSize(20, 20))
+        self._configuration_button.setObjectName("configuration_button")
+
+        size_policy = QSizePolicy(
+            QSizePolicy.Expanding,
+            QSizePolicy.Fixed
+        )
+        size_policy.setHorizontalStretch(0)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(self._configuration_button.sizePolicy().hasHeightForWidth())
+
+        self._configuration_button.setSizePolicy(size_policy)
+
+        # Create the help button
+        self._help_button = QPushButton(self._navbar)
+
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(12)
+
+        self._help_button.setFont(font)
+
+        help_icon = QIcon()
+        help_icon.addPixmap(
+            QPixmap(":/images/images/help_icon.png"),
+            QIcon.Normal,
+            QIcon.Off
+        )
+
+        self._help_button.setIcon(help_icon)
+        self._help_button.setIconSize(QSize(20, 20))
+        self._help_button.setObjectName("help_button")
+
+        size_policy = QSizePolicy(
+            QSizePolicy.Expanding,
+            QSizePolicy.Fixed
+        )
+        size_policy.setHorizontalStretch(0)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(self._help_button.sizePolicy().hasHeightForWidth())
+
+        self._help_button.setSizePolicy(size_policy)
+
+        navbar_vertical_spacer = QSpacerItem(
+            20,
+            40,
+            QSizePolicy.Minimum,
+            QSizePolicy.Expanding
+        )
+
+        self._copyright_label = QLabel(self._navbar)
+        self._copyright_label.setAlignment(Qt.AlignCenter)
+
+        font = QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(8)
+
+        self._copyright_label.setFont(font)
+        self._copyright_label.setObjectName("copyright_label")
+
+        # Add widgets to navbar layout
+        self._navbar_layout.addWidget(self._home_button)
+        self._navbar_layout.addWidget(self._builder_button)
+        self._navbar_layout.addWidget(self._configuration_button)
+        self._navbar_layout.addWidget(self._help_button)
+        self._navbar_layout.addItem(navbar_vertical_spacer)
+        self._navbar_layout.addWidget(self._copyright_label)
+
+    def _setup_menubar(self) -> None:
+        # Create the menubar
+        self._menubar = QFrame(self._central_widget)
+        self._menubar.setFrameShadow(QFrame.Raised)
+        self._menubar.setFrameShape(QFrame.StyledPanel)
+        self._menubar.setObjectName("menubar")
+
+        size_policy = QSizePolicy(
+            QSizePolicy.Expanding,
+            QSizePolicy.Expanding
+        )
+        size_policy.setHorizontalStretch(1)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(self._menubar.sizePolicy().hasHeightForWidth())
+
+        self._menubar.setSizePolicy(size_policy)
+
+        self._menubar_layout = QHBoxLayout(self._menubar)
+        self._menubar_layout.setContentsMargins(0, 0, 0, 0)
+        self._menubar_layout.setObjectName("menubar_layout")
+        self._menubar_layout.setSpacing(0)
+
+        # Create the app logo
+        self._app_logo = QLabel(self._menubar)
+        self._app_logo.setObjectName("app_logo")
+        self._app_logo.setPixmap(  # TODO: Scale the pixmap
+            QPixmap(":/images/images/tensorbuilder-logo-horizontal-black-white.png")
+        )
+        self._app_logo.setText('')
+
+        size_policy = QSizePolicy(
+            QSizePolicy.Expanding,
+            QSizePolicy.Expanding
+        )
+        size_policy.setHorizontalStretch(1)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(self._app_logo.sizePolicy().hasHeightForWidth())
+
+        self._app_logo.setSizePolicy(size_policy)
+
+        # Create the menubar main container
+        self._menubar_main_container = QFrame(self._menubar)
+        self._menubar_main_container.setFrameShadow(QFrame.Raised)
+        self._menubar_main_container.setFrameShape(QFrame.StyledPanel)
+        self._menubar_main_container.setObjectName("menubar_main_container")
+
+        size_policy = QSizePolicy(
+            QSizePolicy.Expanding,
+            QSizePolicy.Expanding
+        )
+        size_policy.setHorizontalStretch(6)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(self._menubar_main_container.sizePolicy().hasHeightForWidth())
+
+        self._menubar_main_container.setSizePolicy(size_policy)
+
+        # Add widgets to the menu layout
+        self._menubar_layout.addWidget(self._app_logo)
+        self._menubar_layout.addWidget(self._menubar_main_container)
+
+    def _retranslate_ui(self, TensorBuilder: QMainWindow) -> None:
+        _translate = QCoreApplication.translate
+
+        TensorBuilder.setWindowTitle(_translate("TensorBuilder", "TensorBuilder"))
+        self._home_button.setText(_translate("TensorBuilder", "Home"))
+        self._builder_button.setText(_translate("TensorBuilder", "Network Builder"))
+        self._configuration_button.setText(_translate("TensorBuilder", "Configuration"))
+        self._help_button.setText(_translate("TensorBuilder", "Help"))
+        self._copyright_label.setText(
+            _translate("TensorBuilder", "Copyright 2020, Julian_Orteil\nAll Rights Reserved")
+        )
