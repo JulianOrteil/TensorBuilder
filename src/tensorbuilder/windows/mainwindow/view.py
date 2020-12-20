@@ -70,7 +70,6 @@ class MainWindowView(UiMainWindow, QMainWindow):
         super().__init__(parent=parent)
 
         # Build the window widgets
-        self.resize(1, 1)
         self.setup_ui(self)
 
         # Connect signals to slots
