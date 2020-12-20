@@ -31,6 +31,9 @@ from __future__ import division
 from __future__ import print_function
 
 
+__all__ = ["UiMainWindow"]
+
+
 from PyQt5.QtCore import QCoreApplication, QMetaObject, QObject, QSize, Qt
 from PyQt5.QtGui import QFont, QIcon, QPixmap
 from PyQt5.QtWidgets import (
