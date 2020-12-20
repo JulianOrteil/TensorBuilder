@@ -16,9 +16,9 @@
 
 This module builds and configures the widgets of the main window.
 
-'UiMainWindow' is the primary builder class for the main window. It is
-meant to be inherited before the window type (i.e. 'QMainWindow') and
-the 'setup_ui' function should be called to build the widgets.
+'UiMainWindow' is the primary builder class for the main window. The
+class is a mixin, so it can be inherited in any order. the 'setup_ui'
+function should be called to build the widgets.
 
 Importing everything from this module will only import the variables as
 defined by the '__all__' attribute.
@@ -34,7 +34,7 @@ from __future__ import print_function
 __all__ = ["UiMainWindow"]
 
 
-from PyQt5.QtCore import QCoreApplication, QMetaObject, QObject, QSize, Qt
+from PyQt5.QtCore import QCoreApplication, QMetaObject, QSize, Qt
 from PyQt5.QtGui import QFont, QIcon, QPixmap
 from PyQt5.QtWidgets import (
     QFrame,
@@ -50,7 +50,7 @@ from PyQt5.QtWidgets import (
 )
 
 
-class UiMainWindow(QObject):
+class UiMainWindow(object):
     """The primary builder class of the main window.
 
     Call :meth:`setup_ui()` to build the widgets of the window.
@@ -166,6 +166,15 @@ class UiMainWindow(QObject):
         self._central_layout.setContentsMargins(0, 0, 0, 0)
         self._central_layout.setObjectName("central_layout")
         self._central_layout.setSpacing(0)
+
+        # Create the main container
+        self._setup_main_container()
+
+        # Create the navbar
+        self._setup_navbar()
+
+        # Create the menubar
+        self._setup_menubar()
 
         # Add widgets to the central layout
         self._central_layout.addWidget(self._menubar, 0, 0, 1, 2)

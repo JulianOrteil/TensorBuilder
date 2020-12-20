@@ -56,11 +56,6 @@ class QMainWindow(_QMainWindow):
             :obj:`None`, then this class will be considered to be a
             top-level widget.
             Defaults to :obj:`None`.
-        flags (:obj:`WindowFlags`):
-            Enums that control various properties of the class for the
-            window manager. Some flags may not be supported, depending
-            on the OS window manager.
-            Defaults to (default) :obj:`WindowFlags`.
 
     Attributes:
         closed (:obj:`pyqtSignal`):
@@ -101,10 +96,9 @@ class QMainWindow(_QMainWindow):
 
     def __init__(
         self,
-        parent: Optional[QWidget] = None,
-        flags: Union[Qt.WindowFlags, Qt.WindowType] = Qt.WindowFlags()
+        parent: Optional[QWidget] = None
     ) -> None:
-        super().__init__(parent=parent, flags=flags)
+        super().__init__(parent=parent)
 
     def closeEvent(self, event: QCloseEvent) -> None:
         self.closed.emit(event)

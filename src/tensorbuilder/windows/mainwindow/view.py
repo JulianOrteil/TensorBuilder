@@ -32,9 +32,51 @@ from __future__ import print_function
 __all__ = ["MainWindowView"]
 
 
-from tensorbuilder.utils import QMainWindow
+from typing import Optional
+
+from loguru import logger
+from PyQt5.QtCore import QObject
+from PyQt5.QtWidgets import QMainWindow
+
+# from tensorbuilder.utils import QMainWindow
 from .ui import UiMainWindow
 
 
 class MainWindowView(UiMainWindow, QMainWindow):
-    pass
+    """Manages display events for the main window.
+
+    When the user interacts with the main window, depending on that
+    event, it is intercepted and handled in this class. Also, any
+    display changes should be managed within this class.
+
+    Example Usage:
+        >>> from tensorbuilder.windows.mainwindow.view import MainWindowView
+        >>>
+        >>> class MainWindow(object):
+        ...     _view: MainWindowView
+        ...
+        ...     def __init__(self) -> None:
+        ...         super().__init__()
+        ...
+        ...         self._view = MainWindowView()
+        ...
+    """
+
+    def __init__(
+        self,
+        parent: Optional[QObject] = None
+    ) -> None:
+        logger.debug(f"Initializing {__name__}.{__class__.__name__}")
+        super().__init__(parent=parent)
+
+        # Build the window widgets
+        self.resize(1, 1)
+        self.setup_ui(self)
+
+        # Connect signals to slots
+        self._connect_signals()
+
+        logger.success(f"Successfully initialized {__name__}.{__class__.__name__}")
+
+    def _connect_signals(self) -> None:
+        logger.debug("Connecting main window view signals")
