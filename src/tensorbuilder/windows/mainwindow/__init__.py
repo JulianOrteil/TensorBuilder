@@ -14,6 +14,11 @@
 
 """The main interactable window of the application.
 
+'MainWindow' is the main interactable window of the application. The
+window is what the user will primarily interact with.
+
+Importing everything from this module will only import the variables as
+defined by the '__all__' attribute.
 """
 
 
