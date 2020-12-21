@@ -38,7 +38,7 @@ from .model import MainWindowModel
 from .view import MainWindowView
 
 
-class MainWindow(MainWindowModel, MainWindowView):
+class MainWindow(MainWindowView, MainWindowModel):
     """Processes the user interactions of the main window.
 
     User interactions are intercepted by the view of the window,
