@@ -98,6 +98,11 @@ class MainWindowView(UiMainWindow, QMainWindow):
     def _connect_signals(self) -> None:
         logger.debug("Connecting main window view signals")
 
+        self._home_button.clicked.connect(self._on_home_button_clicked)
+        self._builder_button.clicked.connect(self._on_builder_button_clicked)
+        self._configuration_button.clicked.connect(self._on_configuration_button_clicked)
+        self._help_button.clicked.connect(self._on_help_button_clicked)
+
     @pyqtSlot()
     def _on_home_button_clicked(self) -> None:
         self.home_button_clicked.emit()

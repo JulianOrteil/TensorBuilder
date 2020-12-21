@@ -70,6 +70,8 @@ class Application(QObject):
     _loader: Loader
     _loader_thread: QThread
 
+    _mainwindow: MainWindow
+
     def __init__(self, args: argparse.Namespace) -> None:
         logger.debug(f"Initializing {__name__}.{__class__.__name__}")
         super().__init__()
@@ -82,7 +84,27 @@ class Application(QObject):
         self._loader.moveToThread(self._loader_thread)
         self._loader_thread.start()
 
+        # Create the main window and display it
+        self._mainwindow = MainWindow()
+        self._mainwindow.show()
+
+        # Connect signals to slots
+        self._connect_slots()
+
         logger.success(f"Successfully initialized {__name__}.{__class__.__name__}")
+
+    def _connect_slots(self) -> None:
+        logger.debug("Connecting application signals")
+
+    def quit(self) -> None:
+        """Gracefully shuts down each component of the application."""
+
+        logger.info("Shutting down the application")
+
+        # Quit the loader
+        self._loader_thread.quit()
+
+        logger.success("Successfully shut down the application")
 
 
 class Loader(QObject):

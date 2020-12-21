@@ -33,13 +33,13 @@ __all__ = ["MainWindow"]
 
 
 from loguru import logger
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import QObject, pyqtSlot
 
 from .model import MainWindowModel
 from .view import MainWindowView
 
 
-class MainWindow(object):
+class MainWindow(QObject):
     """Processes the user interactions of the main window.
 
     User interactions are intercepted by the view of the window,
@@ -93,3 +93,13 @@ class MainWindow(object):
     @pyqtSlot()
     def _on_help_button_clicked(self) -> None:
         logger.info("User clicked on the help button")
+
+    def close(self) -> None:
+        """Closes the window."""
+
+        self._view.close()
+
+    def show(self) -> None:
+        """Shows the window."""
+
+        self._view.show()
