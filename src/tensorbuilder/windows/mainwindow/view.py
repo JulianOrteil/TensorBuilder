@@ -35,10 +35,9 @@ __all__ = ["MainWindowView"]
 from typing import Optional
 
 from loguru import logger
-from PyQt5.QtCore import QObject
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 
-# from tensorbuilder.utils import QMainWindow
+from tensorbuilder.utils import QMainWindow
 from .ui import UiMainWindow
 
 
@@ -49,12 +48,37 @@ class MainWindowView(UiMainWindow, QMainWindow):
     event, it is intercepted and handled in this class. Also, any
     display changes should be managed within this class.
 
+    Attributes:
+        home_button_clicked (:obj:`pyqtSignal`):
+            The signal fired when the home button has been clicked.
+            Nothing is sent through the signal
+        builder_button_clicked (:obj:`pyqtSignal`):
+            The signal fired when the builder button has been clicked.
+            Nothing is sent through the signal
+        configuration_button_clicked (:obj:`pyqtSignal`):
+            The signal fired when the configuration button has been
+            clicked. Nothing is sent through the signal
+        help_button_clicked (:obj:`pyqtSignal`):
+            The signal fired when the help button has been clicked.
+            Nothing is sent through the signal
+
     Example Usage:
         >>> from tensorbuilder.windows.mainwindow.view import MainWindowView
         >>>
-        >>> class MainWindow(MainWindowView):
-        ...     pass
+        >>> class MainWindow(object):
+        ...     _view: MainWindowView
+        ...
+        ...     def __init__(self) -> None:
+        ...         super().__init__()
+        ...
+        ...         self._view = MainWindowView()
+        ...
     """
+
+    home_button_clicked = pyqtSignal()
+    builder_button_clicked = pyqtSignal()
+    configuration_button_clicked = pyqtSignal()
+    help_button_clicked = pyqtSignal()
 
     def __init__(
         self,
@@ -73,3 +97,19 @@ class MainWindowView(UiMainWindow, QMainWindow):
 
     def _connect_signals(self) -> None:
         logger.debug("Connecting main window view signals")
+
+    @pyqtSlot()
+    def _on_home_button_clicked(self) -> None:
+        self.home_button_clicked.emit()
+
+    @pyqtSlot()
+    def _on_builder_button_clicked(self) -> None:
+        self.builder_button_clicked.emit()
+
+    @pyqtSlot()
+    def _on_configuration_button_clicked(self) -> None:
+        self.configuration_button_clicked.emit()
+
+    @pyqtSlot()
+    def _on_help_button_clicked(self) -> None:
+        self.help_button_clicked.emit()

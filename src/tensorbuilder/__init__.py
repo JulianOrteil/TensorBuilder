@@ -45,12 +45,16 @@ __version__ = "0.0.1alpha"
 
 
 import argparse
+import os
 import sys
+sys.path.append(os.path.abspath("./src"))
 from multiprocessing import freeze_support
 
 from loguru import logger
 from PyQt5.QtCore import QObject, QThread
 from PyQt5.QtWidgets import QApplication
+
+from tensorbuilder.windows import MainWindow
 
 
 class Application(QObject):

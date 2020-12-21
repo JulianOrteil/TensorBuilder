@@ -33,12 +33,13 @@ __all__ = ["MainWindow"]
 
 
 from loguru import logger
+from PyQt5.QtCore import pyqtSlot
 
 from .model import MainWindowModel
 from .view import MainWindowView
 
 
-class MainWindow(MainWindowView, MainWindowModel):
+class MainWindow(object):
     """Processes the user interactions of the main window.
 
     User interactions are intercepted by the view of the window,
@@ -54,9 +55,15 @@ class MainWindow(MainWindowView, MainWindowModel):
         >>> mainwindow = MainWindow()
     """
 
+    _model: MainWindowModel
+    _view: MainWindowView
+
     def __init__(self) -> None:
         logger.debug(f"Initializing {__name__}.{__class__.__name__}")
         super().__init__()
+
+        self._model = MainWindowModel()
+        self._view = MainWindowView()
 
         # Connect signals to slots
         self._connect_signals()
@@ -65,3 +72,24 @@ class MainWindow(MainWindowView, MainWindowModel):
 
     def _connect_signals(self) -> None:
         logger.debug("Connecting main window controller signals")
+
+        self._view.home_button_clicked.connect(self._on_home_button_clicked)
+        self._view.builder_button_clicked.connect(self._on_builder_button_clicked)
+        self._view.configuration_button_clicked.connect(self._on_configuration_button_clicked)
+        self._view.help_button_clicked.connect(self._on_help_button_clicked)
+
+    @pyqtSlot()
+    def _on_home_button_clicked(self) -> None:
+        logger.info("User clicked on the home button")
+
+    @pyqtSlot()
+    def _on_builder_button_clicked(self) -> None:
+        logger.info("User clicked on the builder button")
+
+    @pyqtSlot()
+    def _on_configuration_button_clicked(self) -> None:
+        logger.info("User clicked on the configuration button")
+
+    @pyqtSlot()
+    def _on_help_button_clicked(self) -> None:
+        logger.info("User clicked on the help button")
