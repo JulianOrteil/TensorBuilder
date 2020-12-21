@@ -1,6 +1,7 @@
 <RCC>
   <qresource prefix="images">
     <file>../images/configuration_icon.png</file>
+    <file>../images/tensorbuilder-logo-horizontal-black-white-small.png</file>
     <file>../images/builder_icon.png</file>
     <file>../images/documentation_icon.png</file>
     <file>../images/home_icon.png</file>

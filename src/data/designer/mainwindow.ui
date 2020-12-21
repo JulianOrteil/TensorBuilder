@@ -389,7 +389,7 @@ All Rights Reserved</string>
          </property>
          <property name="maximumSize">
           <size>
-           <width>274</width>
+           <width>275</width>
            <height>40</height>
           </size>
          </property>
@@ -397,7 +397,7 @@ All Rights Reserved</string>
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="resources.qrc">:/images/images/tensorbuilder-logo-horizontal-black-white.png</pixmap>
+          <pixmap resource="resources.qrc">:/images/images/tensorbuilder-logo-horizontal-black-white-small.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>

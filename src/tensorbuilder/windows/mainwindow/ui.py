@@ -398,8 +398,8 @@ class UiMainWindow(object):
         # Create the app logo
         self._app_logo = QLabel(self._menubar)
         self._app_logo.setObjectName("app_logo")
-        self._app_logo.setPixmap(  # TODO: Scale the pixmap
-            QPixmap(":/images/images/tensorbuilder-logo-horizontal-black-white.png")
+        self._app_logo.setPixmap(
+            QPixmap(":/images/images/tensorbuilder-logo-horizontal-black-white-small.png")
         )
         self._app_logo.setText('')
 
