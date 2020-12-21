@@ -49,6 +49,8 @@ from PyQt5.QtWidgets import (
     QWidget
 )
 
+from . import resources as _
+
 
 class UiMainWindow(object):
     """The primary builder class of the main window.
@@ -327,7 +329,7 @@ class UiMainWindow(object):
 
         help_icon = QIcon()
         help_icon.addPixmap(
-            QPixmap(":/images/images/help_icon.png"),
+            QPixmap(":/images/images/documentation_icon.png"),
             QIcon.Normal,
             QIcon.Off
         )
