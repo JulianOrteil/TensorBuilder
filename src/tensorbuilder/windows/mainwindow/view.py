@@ -52,14 +52,8 @@ class MainWindowView(UiMainWindow, QMainWindow):
     Example Usage:
         >>> from tensorbuilder.windows.mainwindow.view import MainWindowView
         >>>
-        >>> class MainWindow(object):
-        ...     _view: MainWindowView
-        ...
-        ...     def __init__(self) -> None:
-        ...         super().__init__()
-        ...
-        ...         self._view = MainWindowView()
-        ...
+        >>> class MainWindow(MainWindowView):
+        ...     pass
     """
 
     def __init__(
