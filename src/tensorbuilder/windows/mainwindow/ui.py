@@ -127,7 +127,8 @@ class UiMainWindow(object):
             "}\n"
             "\n"
             "#central_widget {\n"
-            "    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 172, 0, 255), stop:1 rgba(255, 37, 0, 255));\n"
+            "    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, "
+            "stop:0 rgba(255, 172, 0, 255), stop:1 rgba(255, 37, 0, 255));\n"
             "}\n"
             "\n"
             "#copyright_label {\n"
@@ -257,6 +258,10 @@ class UiMainWindow(object):
         size_policy.setHeightForWidth(self._home_button.sizePolicy().hasHeightForWidth())
 
         self._home_button.setSizePolicy(size_policy)
+        self._home_button.setStyleSheet(
+            "background-color: rgba(255, 255, 255, 50);\n"
+            "border-radius: 0px;"
+        )
 
         # Create the builder button
         self._builder_button = QPushButton(self._navbar)
